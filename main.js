@@ -8,9 +8,13 @@ function buildUniqueId(prefix = 'prefix')
     return `${prefix}-${Math.floor(Math.random() * Date.now())}`;
 }
 
+
+/*
+    Working with objects
+*/
 const state = 
 {
-    taksName: "",
+    taskName: "",
     tasks: 
     [
         {
@@ -38,6 +42,10 @@ function returnTaskObject(name)
     };
 }
 
+
+/*
+    Building elements
+*/
 function buildTodoElement(id, name)
 {
     const listItem = document.createElement('li');
@@ -65,5 +73,36 @@ function buildDeleteButton()
     });
 
     return button;
+}
+
+
+/*
+    Handling user input
+*/
+function handleInputChange(event)
+{
+    state.taskName = e.target.value;
+}
+
+function handleFormSubmit(event)
+{
+    event.preventDefault();
+    state.tasks = [...stateTasks, returnTaskObject(state.taskName)];
+    state.taskName = "";
+}
+
+
+/*
+    Rendering content
+    after loading page up, submitting form
+*/
+function renderInput()
+{
+    todoInput.value = state.taskName;
+}
+
+function renderTodoList()
+{
+    const fragment = document.createDocumentFragment();
 }
 
