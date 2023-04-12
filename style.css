@@ -2,3 +2,20 @@ html
 {
     font-family: 'Cabin';
 }
+
+html
+{
+    font-size: 62.5%;
+}
+
+body
+{
+    font-size: 2rem;
+    line-height: 1.25;
+}
+
+input:focus
+{
+    outline: 3px solid black;
+    outline-offset: 0.2rem;
+}
