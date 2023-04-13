@@ -19,3 +19,8 @@ input:focus
     outline: 3px solid black;
     outline-offset: 0.2rem;
 }
+
+label > span
+{
+    font-size: 0.75em;
+}

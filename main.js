@@ -35,8 +35,7 @@ function returnTaskObject(name)
         }
     );
     */
-    return
-    {
+    return {
         id: buildUniqueId('todo'),
         name
     };
@@ -50,12 +49,12 @@ function buildTodoElement(id, name)
 {
     const listItem = document.createElement('li');
     const span = document.createElement('span');
-    const liTextContent = document.createTextNode('name');
+    const liTextContent = document.createTextNode(name);
 
     span.appendChild(liTextContent);
     listItem.id = id;
     listItem.appendChild(span);
-    listItem.appendChild(buildDeleteButton());
+    listItem.appendChild(buildDeleteButton(id));
 
     return listItem;
 }
@@ -63,13 +62,14 @@ function buildTodoElement(id, name)
 function buildDeleteButton()
 {
     const button = document.createElement('button');
-    const deleteTextContent = document.createTextNode('Detele');
+    const deleteTextContent = document.createTextNode('Delete');
 
     button.setAttribute('type', 'button');
-    button.textContent = deleteTextContent;
+    button.appendChild(deleteTextContent);
     button.addEventListener('click', (event) =>
     {
-        event.target.remove();
+        //event.target.parentElement.remove();
+        handleDeleteButton()
     });
 
     return button;
@@ -81,14 +81,24 @@ function buildDeleteButton()
 */
 function handleInputChange(event)
 {
-    state.taskName = e.target.value;
+    state.taskName = event.target.value;
 }
 
 function handleFormSubmit(event)
 {
     event.preventDefault();
-    state.tasks = [...stateTasks, returnTaskObject(state.taskName)];
+    /*
+    ...state.tasks = [state tasks complete array]
+    */
+    state.tasks = [...state.tasks, returnTaskObject(state.taskName)];
     state.taskName = "";
+
+    renderTodoList();
+}
+
+function handleDeleteButton(id)
+{
+    
 }
 
 
@@ -104,5 +114,31 @@ function renderInput()
 function renderTodoList()
 {
     const fragment = document.createDocumentFragment();
+    state.tasks.forEach((element) =>
+    {
+        console.log(element);
+        fragment.appendChild(buildTodoElement(element.id, element.name));
+    });
+
+    while(todoList.firstChild)
+    {
+        todoList.firstChild.remove();
+    }
+
+    todoList.appendChild(fragment);
 }
 
+
+/*
+    Initializtion of form functionality
+*/
+document.addEventListener("DOMContentLoaded", init);
+
+function init()
+{
+    todoInput.addEventListener('change', (event) => handleInputChange(event));
+    todoForm.addEventListener('submit', handleFormSubmit);
+
+    renderInput();
+    renderTodoList();
+}
