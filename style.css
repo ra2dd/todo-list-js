@@ -1,3 +1,10 @@
+*,
+*::before,
+*::after
+{
+    box-sizing: border-box;
+}
+
 html
 {
     font-family: 'Cabin';
@@ -6,6 +13,10 @@ html
 html
 {
     font-size: 62.5%;
+
+    width: 95%;
+    max-width: 30em;
+    margin: 0 auto;
 }
 
 body
@@ -18,4 +29,24 @@ input:focus
 {
     outline: 3px solid black;
     outline-offset: 0.2rem;
+}
+
+* + button
+{
+    margin-left: 0.5rem;
+}
+
+label
+{
+    display: table;
+}
+
+ul
+{
+    padding-left: 2em;
+}
+
+label + input[type="text"]
+{
+    margin-top: 0.6rem 
 }
