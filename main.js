@@ -59,7 +59,7 @@ function buildTodoElement(id, name)
     return listItem;
 }
 
-function buildDeleteButton()
+function buildDeleteButton(id)
 {
     const button = document.createElement('button');
     const deleteTextContent = document.createTextNode('Delete');
@@ -69,7 +69,7 @@ function buildDeleteButton()
     button.addEventListener('click', (event) =>
     {
         //event.target.parentElement.remove();
-        handleDeleteButton()
+        handleDeleteButton(id);
     });
 
     return button;
@@ -93,12 +93,19 @@ function handleFormSubmit(event)
     state.tasks = [...state.tasks, returnTaskObject(state.taskName)];
     state.taskName = "";
 
+    renderInput();
     renderTodoList();
 }
 
 function handleDeleteButton(id)
 {
-    
+    /*
+        In array.filter you can't use curly braces,
+        because the condition will throw false every time
+    */
+    state.tasks = state.tasks.filter((element) => element.id !== id);
+
+    renderTodoList();
 }
 
 
@@ -106,6 +113,7 @@ function handleDeleteButton(id)
     Rendering content
     after loading page up, submitting form
 */
+
 function renderInput()
 {
     todoInput.value = state.taskName;
@@ -116,7 +124,6 @@ function renderTodoList()
     const fragment = document.createDocumentFragment();
     state.tasks.forEach((element) =>
     {
-        console.log(element);
         fragment.appendChild(buildTodoElement(element.id, element.name));
     });
 
